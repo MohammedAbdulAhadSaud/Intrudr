@@ -21,6 +21,7 @@ Intrudr is a Python-  based HTTP request fuzzer that allows you to:
 - - - 
 
 ## 🛠 Features
+-  **Console the Attack Summary** with Detailed request logging with request index, parameter values, HTTP status, response length, and response time for each request
 
 -  **Raw HTTP Request Input**: Paste raw HTTP requests interactively.
 -  **Parameter Detection**: Automatically detects URL and body parameters.
