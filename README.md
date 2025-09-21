@@ -63,3 +63,13 @@ pip install -r requirements.txt
 pip install requests colorama
 
 ```
+---
+
+# Installation
+
+## Clone the repo and make the script executable:
+```bash
+git clone https://github.com/MohammedAbdulAhadSaud/Intrudr.git
+cd Intrudr
+chmod +x intrudr.py    # or run with python3 intrudr.py
+```
