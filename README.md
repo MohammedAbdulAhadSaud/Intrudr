@@ -47,17 +47,7 @@ Intrudr is a Python-  based HTTP request fuzzer that allows you to:
 ```bash
 git clone https://github.com/MohammedAbdulAhadSaud/Intrudr.git
 cd Intrudr
-
-- Install dependencies:
-
-pip install - r requirements.txt
-
-- Required packages:
-
-- - requests
-
-- -  colorama
-
+python3 intrudr-v2beta.py
 ```
 
 # Usage
