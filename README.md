@@ -11,7 +11,7 @@
 ## 📝 Description
 Intrudr is a Python-  based HTTP request fuzzer that allows you to:
 
-### To send request Faster than the Burpsuite-  Community-  Edition
+### It send request Faster than the Burpsuite-  Community-  Edition
 -   Send raw HTTP requests with customizable parameters.
 -   Detect and handle placeholders in requests (`^^PLACEHOLDER^^` syntax).
 -   Generate parameter combinations using multiple **attack modes**.
