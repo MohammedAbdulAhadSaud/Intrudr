@@ -57,6 +57,9 @@ Also note: writing full responses into CSV can create very large files. The scri
 
 Install dependencies:
 ```bash
+
 pip install -r requirements.txt
 # or
 pip install requests colorama
+
+```
