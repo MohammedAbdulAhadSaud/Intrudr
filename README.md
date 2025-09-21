@@ -1,4 +1,3 @@
-````markdown
 ## Intrudr — Concurrent HTTP Requester / Parameter Fuzzer (VERSION4 BETA)
 
 > **WARNING:** This tool can generate a large number of HTTP requests and write full responses to disk. Only use it on systems and targets you own or where you have explicit, documented permission to test.
