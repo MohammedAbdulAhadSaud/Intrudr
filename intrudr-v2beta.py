@@ -597,7 +597,6 @@ def send_requests_concurrent(method, path, headers, body, combos, ordered_keys, 
 	print(Fore.CYAN + f"\n[*] Total attack time: {elapsed:.2f} s ({format_duration(elapsed)})" + Style.RESET_ALL)
 
 # ================================== MAIN ==================================
-# ================================== MAIN ==================================
 def main():
 	start_all = time.time()
 	try:
