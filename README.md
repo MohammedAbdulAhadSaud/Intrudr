@@ -1,75 +1,175 @@
-# Intrudr — HTTP request variation sender (VERSION2 BETA)
-
-> **Quick:** an interactive tool to paste a raw HTTP request, auto-detect parameters/placeholders, generate value combos (sniper/clusterbomb/pitchfork/battering-ram), send requests concurrently, and save responses to disk for analysis.
+# Intrudr -   Advanced HTTP Request Fuzzer
 
 ---
 
-## Table of contents
-- [What it is](#what-it-is)
-- [Features](#features)
-- [Warning / Ethics](#warning--ethics)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [How it works (interactive flow)](#how-it-works-interactive-flow)
-- [Attack modes explained](#attack-modes-explained)
-- [Configuration / tuning](#configuration--tuning)
-- [Output files](#output-files)
-- [Examples](#examples)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License & Author](#license--author)
+## ⚠️ Warning
+-   Writing full HTTP responses into CSV can create very large files.
+-   Use responsibly and only on systems you are authorized to test.
 
 ---
 
-## What it is
-`Intrudr` is a small command-line Python tool to take a raw HTTP request (paste as plaintext), detect query/form parameters and `^^...^^` placeholders, let you provide values (manually or from files), generate attack/test combinations, send those requests concurrently, and save responses and a CSV summary.
+## 📝 Description
+Intrudr is a Python-  based HTTP request fuzzer that allows you to:
 
-It’s meant for testing APIs, debugging and defensive/security testing workflows where generating many variants of a request is useful.
+-   To send request Faster than the Burpsuite-  Community-  Edition
+-   Send raw HTTP requests with customizable parameters.
+-   Detect and handle placeholders in requests (`^^PLACEHOLDER^^` syntax).
+-   Generate parameter combinations using multiple **attack modes**.
+-   Save full responses and raw sent requests for later analysis.
+- It supports concurrency, user- defined values from files, default values, and flexible attack strategies.
 
----
+- - - 
 
-## Features
-- Paste raw HTTP request (request line + headers + optional body)
-- Auto-detect URL/query/form parameters and wrapped placeholders `^^...^^`
-- Replace placeholders with values from files or manual input
-- Multiple attack modes: Sniper, Clusterbomb (Cartesian), Pitchfork, Battering-ram
-- Concurrent sending with `ThreadPoolExecutor` and ordered result printing
-- Saves full responses to files and a `summary.csv`
-- Randomized `User-Agent` selection and optional proxy support
-- Saves "prepared raw" sent requests (binary) for forensic analysis
+## 🛠 Features
 
----
+-  **Raw HTTP Request Input**: Paste raw HTTP requests interactively.
+-  **Parameter Detection**: Automatically detects URL and body parameters.
+-  **Placeholders**: Supports custom placeholders with the `^^PLACEHOLDER^^` syntax.
+-  **Attack Modes**:
+  -  **Sniper**: Varies one parameter at a time.
+  -  **Clusterbomb**: Cartesian product of all parameter values.
+  -  **Pitchfork**: Pairwise combination of multi- value lists; single/default values are repeated.
+  -  **Battering- ram**: All parameters take the same value from the first multi- value list; single/default values are repeated.
+-  **Concurrency**: Uses ThreadPoolExecutor for fast requests.
+-  **User- Agent Randomization**: Rotates through a list of realistic User- Agent headers.
+-  **Proxy Support**: Optional HTTP/HTTPS proxy.
+-  **Response Management**:
+  -  Save full responses as `.txt` files.
+  -  Save raw prepared requests as `.bin` files.
+  -  Generate summary CSV with request/response metadata.
 
-## Warning / Ethics
-**Use only on systems you own or where you have explicit permission to test.**  
-This tool can generate many requests quickly; misusing it can be illegal, disruptive, or cause service outages. The author and contributors are not responsible for misuse.
+- - - 
 
-Also note: writing full responses into CSV can create very large files. The script prints a warning at the top.
+## ⚙️ Installation
 
----
+1. Clone the repository:
 
-## Requirements
-- Python 3.8+ (script uses modern `concurrent.futures` features)
-- pip:
-  - `requests`
-  - `colorama`
-
-Install dependencies:
-```bash
-
-pip install -r requirements.txt
-# or
-pip install requests colorama
-
-```
----
-
-# Installation
-
-## Clone the repo and make the script executable:
 ```bash
 git clone https://github.com/MohammedAbdulAhadSaud/Intrudr.git
 cd Intrudr
-chmod +x intrudr.py    # or run with python3 intrudr.py
+
+- Install dependencies:
+
+pip install - r requirements.txt
+
+- Required packages:
+
+- - requests
+
+- -  colorama
+
+# Usage
+
+- Run the script:
+
+- python3 intrudr.py
+
+- Step- by- step:
+
+-  Paste raw HTTP request:
+
+```request Ex
+POST /login HTTP/1.1
+Host: example.com
+Content- Type: application/x- www- form- urlencoded
+
+username=^^USER^^&password=^^PASS^^
+END
+
 ```
+-  Use ^^PLACEHOLDER^^ for variables you want to fuzz.
+
+-  End input with "END"  or "..."
+
+-  Detect parameters and placeholders:
+
+-  Intrudr will automatically list detected parameters and placeholders.
+
+-  Example:
+
+Detected Parameters:
+1. username = default
+2. password = default
+
+Detected Placeholders:
+PH1 - > ^^USER^^
+PH2 - > ^^PASS^^
+
+-  Provide values:
+
+-  You can provide:
+
+- -   Single value (manual input)
+
+- -   File input (list of values)
+
+- -   Default/detected value
+
+-  Select attack mode:
+
+-  Options:
+
+- -   Sniper
+
+- -   Clusterbomb
+
+- -   Pitchfork
+
+- -   Battering- ram
+
+-  Logic ensures:
+
+- -   Multi- value lists in Pitchfork or Battering- ram must have the same length.
+
+- -   Single/default parameters are automatically repeated.
+
+-  Specify output folder:
+
+-  Example: responses
+
+-  Intrudr saves:
+
+- -   Full responses (response_XXXX_*.txt)
+
+- -   Raw sent requests (sent_raw_XXXX.bin)
+
+- -   Summary CSV (summary.csv)
+
+-    View summary:
+
+-   Colored console output shows request number, status, length, time, and errors.
+
+-   Full response can be previewed or just saved to files.
+
+⚡ Attack Mode Details
+Mode	Description
+Sniper	Varies one parameter at a time, others fixed
+Clusterbomb	Cartesian product of all parameter values
+Pitchfork	Pairwise combination of multi-  value lists; single/default values are repeated
+Battering-  ram	All parameters take the same value from the first multi-  value list; single/default repeated
+
+
+# Output Structure
+
+
+-   response_XXXX_*.txt: Full response text.
+
+-   sent_raw_XXXX.bin: Prepared raw request bytes.
+
+-   summary.csv: Summary of all requests, statuses, lengths, errors, and response previews.
+
+# Configuration Options
+
+-  MAX_WORKERS: Number of concurrent requests (default: 12)
+
+-  REQUEST_TIMEOUT: Timeout per request in seconds (default: 60)
+
+-  REQUEST_RETRIES: Number of retries for failed requests (default: 1)
+
+-  SHOW_FULL_RESPONSE: Whether to print full response to console (capped by MAX_RESPONSE_PRINT)
+
+-  USE_PROXY: Enable/disable proxy usage
+
+-  PROXY_ADDR: Proxy address if enabled
+
+-  RECORD_PREPARED_RAW: Save raw prepared requests as .bin files
