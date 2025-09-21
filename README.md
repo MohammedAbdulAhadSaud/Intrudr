@@ -58,6 +58,8 @@ pip install - r requirements.txt
 
 - -  colorama
 
+```
+
 # Usage
 
 - Run the script:
@@ -68,7 +70,8 @@ pip install - r requirements.txt
 
 -  Paste raw HTTP request:
 
-```request Ex
+```Request Ex
+
 POST /login HTTP/1.1
 Host: example.com
 Content- Type: application/x- www- form- urlencoded
